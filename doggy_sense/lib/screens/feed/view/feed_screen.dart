@@ -2,6 +2,7 @@ import 'package:doggy_sense/common/constants/gaps.dart';
 import 'package:doggy_sense/common/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../../diary/view/add_diary_screen.dart';
 import '../widgets/card_view.dart';
 import '../model/card_model.dart';
 import 'detail_screen.dart';
@@ -38,6 +39,8 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: const Color(0xffFAF9F6),
       body: Padding(
@@ -64,11 +67,42 @@ class _FeedScreenState extends State<FeedScreen> {
               ],
             ),
             Gaps.v16,
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
+            InkWell(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AddDiaryScreen(),
+                ),
+              ),
+              child: Container(
+                width: width,
+                height: height * 0.05,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: const Color(0xff5D4037),
+                    width: 2,
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  child: Row(
+                    children: [
+                      Text(
+                        '오늘은 무슨 일이 있었나요?',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: Sizes.size20,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'NotoSansKR-Medium',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
+            Gaps.v16,
             Expanded(
               child: ListView.builder(
                 itemCount: cards.length,

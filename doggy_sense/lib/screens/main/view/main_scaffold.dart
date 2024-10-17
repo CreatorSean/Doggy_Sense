@@ -23,7 +23,7 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
   String title = '';
 
   final List<Widget> _pageScreen = <Widget>[
-    FeedScreen(),
+    const FeedScreen(),
     const EmotionOnboardingScreen(),
     const SettingScreen(),
   ];
@@ -59,6 +59,10 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
       body: _pageScreen[_selectedPageIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0xffFAF9F6),
+        selectedItemColor: const Color(0xff5D4037),
+        unselectedItemColor: Colors.grey,
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        selectedIconTheme: const IconThemeData(size: 40),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
@@ -83,7 +87,6 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
           ),
         ],
         currentIndex: _selectedPageIndex, // 지정 인덱스로 이동
-        selectedItemColor: Theme.of(context).primaryColor,
         onTap: _onItemTapped, // 선언했던 onItemTapped
       ),
     );
