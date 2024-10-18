@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MainAppbar extends ConsumerStatefulWidget {
-  String title;
-  MainAppbar({
+  final String title;
+  const MainAppbar({
     super.key,
     required this.title,
   });

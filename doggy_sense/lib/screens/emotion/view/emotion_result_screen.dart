@@ -1,51 +1,54 @@
-import 'package:doggy_sense/screens/emotion/view_model/camera_view_model.dart';
+import 'package:doggy_sense/screens/emotion/widgets/imageBox_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 
-class EmotionOnboardingScreen extends ConsumerWidget {
-  final String name = '신이';
-
-  const EmotionOnboardingScreen({super.key});
+class EmotionResultScreen extends ConsumerWidget {
+  const EmotionResultScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: const Color(0xFFFAF9F6),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      backgroundColor: const Color(0xffFAF9F6),
+      body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            const ImageboxWidget(),
             const Spacer(),
-            Text(
-              '$name의 속마음을 들어다 볼까요?',
-              style: const TextStyle(
+            const Text(
+              '신이는 행복해요! 😊',
+              style: TextStyle(
                 fontSize: 20,
-                color: Color(0xff5D4037),
-                fontFamily: 'NotoSansKR-Regular',
+                fontWeight: FontWeight.bold,
+                color: Colors.brown,
               ),
+            ),
+            const Spacer(),
+            const Text(
+              '신이와 함께 한 추억을 기록으로 한 번 남겨볼까요?',
               textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.brown,
+              ),
             ),
             const Spacer(),
             SizedBox(
-              width: double.infinity,
+              width: width * 0.5,
+              height: 50,
               child: ElevatedButton(
                 onPressed: () {
-                  ref
-                      .watch(cameraProvider.notifier)
-                      .getImage(ImageSource.camera, context);
+                  // 추억 쓰기 버튼 기능 구현 예정
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFD4B499),
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
                 child: const Text(
-                  '사진찍기',
+                  '추억 쓰기',
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.white,
@@ -53,6 +56,7 @@ class EmotionOnboardingScreen extends ConsumerWidget {
                 ),
               ),
             ),
+            const Spacer(),
           ],
         ),
       ),

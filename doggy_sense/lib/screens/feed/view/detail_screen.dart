@@ -1,10 +1,8 @@
 import 'package:doggy_sense/common/constants/gaps.dart';
 import 'package:doggy_sense/common/constants/sizes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../model/card_model.dart';
-import '../widgets/card_view.dart';
 
 class DetailScreen extends StatelessWidget {
   final CardModel cardModel;
@@ -32,8 +30,8 @@ class DetailScreen extends StatelessWidget {
                           children: [
                             Image.asset('assets/images/dog.jpg'),
                             Positioned(
-                              top: 16, // 원하는 위치로 조정하세요
-                              right: 16, // 오른쪽에 붙이기 위해 설정
+                              top: 16,
+                              right: 16,
                               child: IconButton(
                                 onPressed: () => Navigator.of(context).pop(),
                                 icon: const Icon(
