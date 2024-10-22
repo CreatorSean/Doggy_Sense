@@ -12,7 +12,8 @@ class CameraViewModel extends AsyncNotifier<XFile?> {
     final XFile? pickedFile = await picker.pickImage(source: imageSource);
     if (pickedFile != null) {
       image = XFile(pickedFile.path);
-      Navigator.pushReplacement(
+
+      Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => const EmotionLoadingScreen(),
