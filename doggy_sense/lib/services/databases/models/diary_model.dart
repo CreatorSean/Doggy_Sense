@@ -1,28 +1,28 @@
 class DiaryModel {
   final int? id;
-  final String dogName;
-  final String birth;
-  final int gender;
+  final int dogId;
+  final String title;
   final String img;
-  final int age;
+  final String sentence;
+  int date;
 
   DiaryModel({
     required this.id,
-    required this.dogName,
-    required this.birth,
-    required this.gender,
+    required this.dogId,
+    required this.title,
     required this.img,
-    required this.age,
+    required this.sentence,
+    required this.date,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'dogName': dogName,
-      'birth': birth,
-      'gender': gender,
+      'dogId': dogId,
+      'title': title,
       'img': img,
-      'age': age,
+      'sentence': sentence,
+      'date': date,
     };
   }
 }

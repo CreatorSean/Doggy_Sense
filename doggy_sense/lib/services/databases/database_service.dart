@@ -1,3 +1,5 @@
+import 'package:doggy_sense/services/databases/models/diary_model.dart';
+import 'package:doggy_sense/services/databases/models/my_pet_model.dart';
 import 'package:logger/logger.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -24,5 +26,75 @@ class DatabaseService {
       await db.execute(
           "CREATE TABLE Diary(id INTEGER PRIMARY KEY AUTOINCREMENT, dogId INTEGER, title TEXT, img TEXT, sentence TEXT, date INTEGER, FOREIGN KEY (dogId) REFERENCES MyPet (id))");
     }, onUpgrade: (db, oldVersion, newVersion) {});
+  }
+
+  // ========================= insert DB ==============================
+  static void insertDB(model, String tablename) async {
+    final db = await database;
+    Logger().i('Insert $tablename DB');
+
+    if (model is DiaryModel) {
+      model.date = DateTime.now().millisecondsSinceEpoch;
+    }
+
+    await db!.insert(
+      tablename,
+      model.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  // ========================= delete DB ==============================
+  static Future<void> deleteDB(model, String tablename) async {
+    final db = await database;
+    Logger().i('Delete DB');
+
+    await db!.delete(
+      tablename,
+      where: "id = ?",
+      whereArgs: [model.id],
+    );
+  }
+
+  static Future<List<DiaryModel>> getDiarysByDogtId(int dogtId) async {
+    final db = await database;
+    Logger().i('Get GameRecords DB for patientId: $dogtId');
+
+    final List<Map<String, dynamic>> maps = await db!.query(
+      'Diary',
+      where: 'dogId = ?',
+      whereArgs: [dogtId],
+    );
+
+    return List.generate(maps.length, (index) {
+      return DiaryModel(
+        id: maps[index]["id"],
+        dogId: maps[index]["dogId"],
+        title: maps[index]["title"],
+        img: maps[index]["img"],
+        sentence: maps[index]["sentence"],
+        date: maps[index]["date"],
+      );
+    });
+  }
+
+  static Future<List<MyPetModel>> getSelectedPet(dogId) async {
+    final db = await database;
+    Logger().i('Get SelectedPatient DB : $dogId');
+    final List<Map<String, dynamic>> maps = await db!.query(
+      'MyPet',
+      where: 'id = ?',
+      whereArgs: [dogId],
+    );
+    return List.generate(maps.length, (index) {
+      return MyPetModel(
+        id: maps[index]["id"],
+        dogName: maps[index]["dogName"],
+        birth: maps[index]["birth"],
+        gender: maps[index]["gender"],
+        img: maps[index]["img"],
+        age: maps[index]["age"],
+      );
+    });
   }
 }

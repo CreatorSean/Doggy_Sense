@@ -1,28 +1,28 @@
 class MyPetModel {
   final int? id;
-  final int dogId;
-  final String title;
+  final String dogName;
+  final String birth;
+  final int gender; // 0: male, 1: female
   final String img;
-  final String sentence;
-  final int date;
+  final int age;
 
   MyPetModel({
     required this.id,
-    required this.dogId,
-    required this.title,
+    required this.dogName,
+    required this.birth,
+    required this.gender,
     required this.img,
-    required this.sentence,
-    required this.date,
+    required this.age,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'dogId': dogId,
-      'title': title,
+      'dogName': dogName,
+      'birth': birth,
+      'gender': gender,
       'img': img,
-      'sentence': sentence,
-      'date': date,
+      'age': age,
     };
   }
 }
