@@ -33,7 +33,7 @@ class RegistrationViewModel extends AsyncNotifier<MyPetModel> {
     return userAge;
   }
 
-  Future<void> insertUser(BuildContext context) async {
+  Future<void> insertMyPet(BuildContext context) async {
     state = const AsyncValue.loading();
     final form = ref.read(registrationForm);
     final age = getUserAge(form["birth"]);

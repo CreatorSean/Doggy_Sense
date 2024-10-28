@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:doggy_sense/screens/main/view/main_scaffold.dart';
+import 'package:doggy_sense/screens/registration/view_model/registration_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileImgaeScreen extends ConsumerStatefulWidget {
@@ -15,6 +18,7 @@ class ProfileImgaeScreen extends ConsumerStatefulWidget {
 
 class _ProfileImgaeScreenState extends ConsumerState<ProfileImgaeScreen> {
   XFile? _dogImage;
+  String imagePath = '';
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickImage() async {
@@ -23,8 +27,18 @@ class _ProfileImgaeScreenState extends ConsumerState<ProfileImgaeScreen> {
     if (pickedFile != null) {
       setState(() {
         _dogImage = pickedFile;
+        imagePath = pickedFile.path;
       });
     }
+  }
+
+  void _onNextTap() {
+    final state = ref.read(registrationForm.notifier).state;
+    ref.read(registrationForm.notifier).state = {...state, "img": imagePath};
+    Navigator.of(context).popUntil(
+      (route) => route.isFirst,
+    );
+    context.goNamed(MainScaffold.routeName);
   }
 
   @override
@@ -81,7 +95,7 @@ class _ProfileImgaeScreenState extends ConsumerState<ProfileImgaeScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // Handle next button press
+                  _onNextTap();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffD3A688),

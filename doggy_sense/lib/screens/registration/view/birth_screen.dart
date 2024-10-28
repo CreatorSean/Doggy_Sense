@@ -1,6 +1,6 @@
 import 'package:doggy_sense/screens/registration/view/gender_screen.dart';
+import 'package:doggy_sense/screens/registration/view_model/registration_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -26,6 +26,21 @@ class _BirthScreenState extends ConsumerState<BirthScreen> {
         _dateController.text = DateFormat('yyyy.MM.dd').format(picked);
       });
     }
+  }
+
+  void _onNextTap() {
+    if (_dateController.text.isEmpty) return;
+    final state = ref.read(registrationForm.notifier).state;
+    ref.read(registrationForm.notifier).state = {
+      ...state,
+      "birth": _dateController.text
+    };
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const GenderScreen(),
+      ),
+    );
   }
 
   @override
@@ -68,12 +83,7 @@ class _BirthScreenState extends ConsumerState<BirthScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const GenderScreen(),
-                    ),
-                  );
+                  _onNextTap();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffD3A688),
