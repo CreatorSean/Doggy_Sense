@@ -1,12 +1,76 @@
 import 'package:doggy_sense/common/constants/gaps.dart';
+import 'package:doggy_sense/services/databases/models/diary_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
-class AddDiaryScreen extends ConsumerWidget {
+import '../view_model/diary_view_model.dart';
+
+class AddDiaryScreen extends ConsumerStatefulWidget {
   const AddDiaryScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _AddDiaryScreenState();
+}
+
+class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _sentenceController = TextEditingController();
+  String title = '';
+  String sentence = '';
+  String imagePath = '';
+
+  XFile? _dogImage;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage() async {
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _dogImage = pickedFile;
+        imagePath = pickedFile.path;
+      });
+    } else {
+      imagePath = 'assets/images/dog.jpg';
+    }
+  }
+
+  void _onSaveTap() {
+    DateTime dateTime = DateTime.now();
+    DiaryModel diary = DiaryModel(
+      id: null,
+      dogId: 1,
+      title: title,
+      img: imagePath,
+      sentence: sentence,
+      date: dateTime.microsecondsSinceEpoch,
+    );
+    ref.read(diaryProvider.notifier).insertPatient(diary);
+    Navigator.pop(context);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController.addListener(
+      () {
+        setState(() {
+          title = _titleController.text;
+        });
+      },
+    );
+    _sentenceController.addListener(
+      () {
+        setState(() {
+          sentence = _sentenceController.text;
+        });
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFAF9F6),
@@ -26,7 +90,7 @@ class AddDiaryScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.check, color: Colors.brown),
             onPressed: () {
-              // 완료 버튼 기능 구현 예정
+              _onSaveTap();
             },
           ),
         ],
@@ -37,44 +101,57 @@ class AddDiaryScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 제목 입력 필드
-            const TextField(
-              decoration: InputDecoration(
+            TextField(
+              keyboardType: TextInputType.text,
+              controller: _titleController,
+              decoration: const InputDecoration(
                 hintText: '제목',
                 hintStyle: TextStyle(color: Colors.grey),
                 border: InputBorder.none,
               ),
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
             Gaps.v16,
             // 사진 추가 버튼
             GestureDetector(
-              onTap: () {
-                // 사진 추가 기능 구현 예정
-              },
-              child: Container(
-                width: double.infinity,
-                height: 150,
-                color: const Color(0xFFF0EDE5),
-                child: const Center(
-                  child: Text(
-                    '사진을 추가해주세요!',
-                    style: TextStyle(fontSize: 16, color: Colors.brown),
-                  ),
-                ),
-              ),
+              onTap: _pickImage,
+              child: _dogImage == null
+                  ? Container(
+                      width: double.infinity,
+                      height: 150,
+                      color: const Color(0xFFF0EDE5),
+                      child: const Center(
+                        child: Text(
+                          '사진을 추가해주세요!',
+                          style: TextStyle(fontSize: 16, color: Colors.brown),
+                        ),
+                      ),
+                    )
+                  : Container(
+                      width: double.infinity,
+                      height: 150,
+                      color: const Color(0xFFF0EDE5),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(imagePath),
+                        ),
+                      ),
+                    ),
             ),
             Gaps.v16,
             // 내용 입력 필드
-            const Expanded(
+            Expanded(
               child: TextField(
+                keyboardType: TextInputType.text,
+                controller: _sentenceController,
                 maxLines: null,
                 expands: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: '오늘은 무슨일이 있었나요?',
                   hintStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none,
                 ),
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
             ),
           ],
