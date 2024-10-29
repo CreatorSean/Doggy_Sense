@@ -2,8 +2,11 @@ import 'package:doggy_sense/screens/registration/view/profile_imgae_screen.dart'
 import 'package:doggy_sense/screens/registration/view_model/registration_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class GenderScreen extends ConsumerStatefulWidget {
+  static String routeName = 'gender';
+  static String routeURL = '/gender';
   const GenderScreen({super.key});
 
   @override
@@ -19,18 +22,17 @@ class _GenderScreenState extends ConsumerState<GenderScreen> {
       ...state,
       "gender": selectedGender
     };
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ProfileImgaeScreen(),
-      ),
-    );
+    context.push(ProfileImgaeScreen.routeURL);
   }
 
   @override
   Widget build(BuildContext context) {
     // final width = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xffFAF9F6),
+        elevation: 0.0,
+      ),
       backgroundColor: const Color(0xffFAF9F6),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),

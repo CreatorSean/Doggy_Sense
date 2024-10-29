@@ -78,6 +78,42 @@ class DatabaseService {
     });
   }
 
+  static Future<List<MyPetModel>> getPetListDB() async {
+    final db = await database;
+    Logger().i('Get MyPet DB');
+
+    final List<Map<String, dynamic>> maps = await db!.query('MyPet');
+
+    return List.generate(maps.length, (index) {
+      return MyPetModel(
+        id: maps[index]["id"],
+        dogName: maps[index]["dogName"],
+        birth: maps[index]["birth"],
+        gender: maps[index]["gender"],
+        img: maps[index]["img"],
+        age: maps[index]["age"],
+      );
+    });
+  }
+
+  static Future<List<DiaryModel>> getDiaryListDB() async {
+    final db = await database;
+    Logger().i('Get MyPet DB');
+
+    final List<Map<String, dynamic>> maps = await db!.query('Diary');
+
+    return List.generate(maps.length, (index) {
+      return DiaryModel(
+        id: maps[index]["id"],
+        dogId: maps[index]["dogId"],
+        title: maps[index]["title"],
+        img: maps[index]["img"],
+        sentence: maps[index]["sentence"],
+        date: maps[index]["date"],
+      );
+    });
+  }
+
   static Future<List<MyPetModel>> getSelectedPet(dogId) async {
     final db = await database;
     Logger().i('Get SelectedPatient DB : $dogId');

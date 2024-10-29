@@ -46,7 +46,7 @@ class RegistrationViewModel extends AsyncNotifier<MyPetModel> {
       age: age,
     );
     await AsyncValue.guard(() async {
-      DatabaseService.insertDB(firstPet, "Users");
+      DatabaseService.insertDB(firstPet, "MyPet");
     });
     if (state.hasError) {
       showErrorSnack(context);

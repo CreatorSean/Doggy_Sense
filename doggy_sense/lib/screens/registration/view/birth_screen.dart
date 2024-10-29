@@ -2,9 +2,13 @@ import 'package:doggy_sense/screens/registration/view/gender_screen.dart';
 import 'package:doggy_sense/screens/registration/view_model/registration_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class BirthScreen extends ConsumerStatefulWidget {
+  static String routeName = 'brith';
+  static String routeURL = '/brith';
+
   const BirthScreen({super.key});
 
   @override
@@ -35,17 +39,16 @@ class _BirthScreenState extends ConsumerState<BirthScreen> {
       ...state,
       "birth": _dateController.text
     };
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const GenderScreen(),
-      ),
-    );
+    context.push(GenderScreen.routeURL);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xffFAF9F6),
+        elevation: 0.0,
+      ),
       backgroundColor: const Color(0xffFAF9F6),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),

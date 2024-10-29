@@ -1,6 +1,7 @@
 import 'package:doggy_sense/screens/registration/view/birth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../view_model/registration_view_model.dart';
 
@@ -21,13 +22,8 @@ class _NameScreenState extends ConsumerState<NameScreen> {
 
   void _onNextTap() {
     if (_username.isEmpty) return;
-    ref.read(registrationForm.notifier).state = {"userName": _username};
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const BirthScreen(),
-      ),
-    );
+    ref.read(registrationForm.notifier).state = {"dogName": _username};
+    context.push(BirthScreen.routeURL);
   }
 
   @override
@@ -43,8 +39,18 @@ class _NameScreenState extends ConsumerState<NameScreen> {
   }
 
   @override
+  void dispose() {
+    _usernameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xffFAF9F6),
+        elevation: 0.0,
+      ),
       backgroundColor: const Color(0xffFAF9F6),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -62,6 +68,7 @@ class _NameScreenState extends ConsumerState<NameScreen> {
             ),
             const SizedBox(height: 20.0),
             TextField(
+              autofocus: false,
               controller: _usernameController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(

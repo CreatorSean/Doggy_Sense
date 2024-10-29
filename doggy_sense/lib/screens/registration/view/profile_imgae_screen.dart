@@ -9,6 +9,8 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileImgaeScreen extends ConsumerStatefulWidget {
+  static String routeName = 'profile';
+  static String routeURL = '/profile';
   const ProfileImgaeScreen({super.key});
 
   @override
@@ -29,21 +31,25 @@ class _ProfileImgaeScreenState extends ConsumerState<ProfileImgaeScreen> {
         _dogImage = pickedFile;
         imagePath = pickedFile.path;
       });
+    } else {
+      imagePath = 'assets/images/dogProfile.png';
     }
   }
 
   void _onNextTap() {
     final state = ref.read(registrationForm.notifier).state;
     ref.read(registrationForm.notifier).state = {...state, "img": imagePath};
-    Navigator.of(context).popUntil(
-      (route) => route.isFirst,
-    );
+    ref.read(registrationProvider.notifier).insertMyPet(context);
     context.goNamed(MainScaffold.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xffFAF9F6),
+        elevation: 0.0,
+      ),
       backgroundColor: const Color(0xffFAF9F6),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
