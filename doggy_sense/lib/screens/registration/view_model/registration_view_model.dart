@@ -8,6 +8,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../services/selected_pet_view_model.dart';
+
 class RegistrationViewModel extends AsyncNotifier<MyPetModel> {
   late MyPetModel myPet;
 
@@ -47,8 +49,10 @@ class RegistrationViewModel extends AsyncNotifier<MyPetModel> {
     );
     await AsyncValue.guard(() async {
       DatabaseService.insertDB(firstPet, "MyPet");
+      ref.read(selectedPetViewModelProvider.notifier).setselectedPet(firstPet);
     });
     myPet = firstPet;
+
     context.goNamed(MainScaffold.routeName);
   }
 

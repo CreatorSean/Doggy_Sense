@@ -2,9 +2,13 @@ import 'package:doggy_sense/common/widgets/main_appbar.dart';
 import 'package:doggy_sense/screens/emotion/view/emotion_onboarding_screen.dart';
 import 'package:doggy_sense/screens/feed/view/feed_screen.dart';
 import 'package:doggy_sense/screens/setting/view/setting_screen.dart';
+import 'package:doggy_sense/services/databases/models/my_pet_model.dart';
+import 'package:doggy_sense/services/selected_pet_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainScaffold extends ConsumerStatefulWidget {
   static const routeName = 'home';
@@ -34,9 +38,20 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
     });
   }
 
+  Future<void> initUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? savedPatientId = prefs.getInt('selectedPatientId') ?? 1;
+    Logger().i("initPatient");
+    MyPetModel pet = await ref
+        .read(selectedPetViewModelProvider.notifier)
+        .getSavedmyPetDB(savedPatientId);
+    ref.read(selectedPetViewModelProvider.notifier).setselectedPet(pet);
+  }
+
   @override
   void initState() {
     super.initState();
+    initUser();
   }
 
   @override
