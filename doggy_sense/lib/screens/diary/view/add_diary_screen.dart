@@ -1,4 +1,5 @@
 import 'package:doggy_sense/common/constants/gaps.dart';
+import 'package:doggy_sense/screens/registration/widgets/showErrorSnack.dart';
 import 'package:doggy_sense/services/databases/models/diary_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,6 +17,7 @@ class AddDiaryScreen extends ConsumerStatefulWidget {
 class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _sentenceController = TextEditingController();
+  XFile? pickedFile;
   String title = '';
   String sentence = '';
   String imagePath = '';
@@ -24,30 +26,33 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickImage() async {
-    final XFile? pickedFile =
-        await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
+    pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
         _dogImage = pickedFile;
-        imagePath = pickedFile.path;
-      });
-    } else {
-      imagePath = 'assets/images/dog.jpg';
-    }
+        imagePath = pickedFile!.path;
+      } else {
+        _dogImage = null;
+        imagePath = 'assets/images/dog.jpg';
+      }
+    });
   }
 
   void _onSaveTap() {
+    if (imagePath.isEmpty) {
+      imagePath = 'assets/images/dog.jpg';
+    }
     DateTime dateTime = DateTime.now();
     DiaryModel diary = DiaryModel(
       id: null,
       dogId: 1,
-      title: title,
+      title: _titleController.text,
       img: imagePath,
-      sentence: sentence,
+      sentence: _sentenceController.text,
       date: dateTime.microsecondsSinceEpoch,
     );
-    ref.read(diaryProvider.notifier).insertPatient(diary);
-    Navigator.pop(context);
+    ref.read(diaryProvider.notifier).insertDiary(diary);
+    Navigator.pop(context, true);
   }
 
   @override

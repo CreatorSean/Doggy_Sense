@@ -16,10 +16,17 @@ class DiaryViewModel extends AsyncNotifier<List<DiaryModel>> {
     });
   }
 
-  Future<void> insertPatient(DiaryModel diary) async {
+  Future<void> insertDiary(DiaryModel diary) async {
     await AsyncValue.guard(() async {
-      DatabaseService.insertDB(diary, "Diary");
+      await DatabaseService.insertDB(diary, "Diary");
     });
+  }
+
+  Future<void> deleteDiary(DiaryModel diary) async {
+    await AsyncValue.guard(() async {
+      await DatabaseService.deleteDB(diary, "Diary");
+    });
+    await getDiaryList();
   }
 
   @override

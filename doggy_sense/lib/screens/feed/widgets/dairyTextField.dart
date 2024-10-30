@@ -15,38 +15,30 @@ class DairyTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const AddDiaryScreen(),
+    return Container(
+      width: width,
+      height: height * 0.05,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: const Color(0xff5D4037),
+          width: 2,
         ),
       ),
-      child: Container(
-        width: width,
-        height: height * 0.05,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            color: const Color(0xff5D4037),
-            width: 2,
-          ),
-        ),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: Row(
-            children: [
-              Text(
-                '오늘은 무슨 일이 있었나요?',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: Sizes.size20,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: 'NotoSansKR-Medium',
-                ),
+      child: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Row(
+          children: [
+            Text(
+              '오늘은 무슨 일이 있었나요?',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: Sizes.size20,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'NotoSansKR-Medium',
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

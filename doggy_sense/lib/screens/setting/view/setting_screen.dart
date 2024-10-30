@@ -11,8 +11,13 @@ class SettingScreen extends ConsumerStatefulWidget {
 class _SettingScreenState extends ConsumerState<SettingScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xffFAF9F6),
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    return const Scaffold(
+      backgroundColor: Color(0xffFAF9F6),
+      body: Column(
+        children: [],
+      ),
     );
   }
 }

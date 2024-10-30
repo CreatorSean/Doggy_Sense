@@ -1,11 +1,12 @@
 import 'package:doggy_sense/common/constants/gaps.dart';
+import 'package:doggy_sense/services/databases/models/diary_model.dart';
 import 'package:flutter/material.dart';
 import '../model/card_model.dart';
 
 class CardView extends StatelessWidget {
-  final CardModel cardModel;
+  final DiaryModel diaryModel;
 
-  const CardView({super.key, required this.cardModel});
+  const CardView({super.key, required this.diaryModel});
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +22,18 @@ class CardView extends StatelessWidget {
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),
             ),
-            child: Image.asset('assets/images/dog.jpg'),
+            child: Image.asset(diaryModel.img),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(cardModel.title,
+                Text(diaryModel.title,
                     style: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.bold)),
                 Gaps.v8,
-                Text(cardModel.subtitle,
+                Text(diaryModel.sentence,
                     style: const TextStyle(fontSize: 16, color: Colors.grey)),
               ],
             ),

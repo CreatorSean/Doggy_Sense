@@ -1,13 +1,14 @@
 import 'package:doggy_sense/common/constants/gaps.dart';
 import 'package:doggy_sense/common/constants/sizes.dart';
+import 'package:doggy_sense/services/databases/models/diary_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../model/card_model.dart';
 
 class DetailScreen extends StatelessWidget {
-  final CardModel cardModel;
+  final DiaryModel diaryModel;
 
-  const DetailScreen({super.key, required this.cardModel});
+  const DetailScreen({super.key, required this.diaryModel});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class DetailScreen extends StatelessWidget {
         child: Column(
           children: [
             Hero(
-                tag: cardModel.title, // Hero 태그 설정
+                tag: diaryModel.id!, // Hero 태그 설정
                 child: Material(
                   type: MaterialType.transparency,
                   child: SingleChildScrollView(
@@ -28,7 +29,7 @@ class DetailScreen extends StatelessWidget {
                       children: [
                         Stack(
                           children: [
-                            Image.asset('assets/images/dog.jpg'),
+                            Image.asset(diaryModel.img),
                             Positioned(
                               top: 16,
                               right: 16,
@@ -48,12 +49,12 @@ class DetailScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(cardModel.title,
+                              Text(diaryModel.title,
                                   style: const TextStyle(
                                       fontSize: Sizes.size32,
                                       fontWeight: FontWeight.bold)),
                               Gaps.v8,
-                              Text(cardModel.subtitle,
+                              Text(diaryModel.sentence,
                                   style: const TextStyle(
                                       fontSize: Sizes.size28,
                                       color: Colors.grey)),

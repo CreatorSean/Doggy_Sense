@@ -48,11 +48,8 @@ class RegistrationViewModel extends AsyncNotifier<MyPetModel> {
     await AsyncValue.guard(() async {
       DatabaseService.insertDB(firstPet, "MyPet");
     });
-    if (state.hasError) {
-      showErrorSnack(context);
-    } else {
-      context.goNamed(MainScaffold.routeName);
-    }
+    myPet = firstPet;
+    context.goNamed(MainScaffold.routeName);
   }
 
   @override

@@ -16,6 +16,14 @@ class FeedScreenViewModel extends AsyncNotifier<List<DiaryModel>> {
 
   @override
   FutureOr<List<DiaryModel>> build() {
+    getDiaryDB();
     return diaryModel;
   }
 }
+
+final feedScreenProvider =
+    AsyncNotifierProvider<FeedScreenViewModel, List<DiaryModel>>(
+  () {
+    return FeedScreenViewModel();
+  },
+);

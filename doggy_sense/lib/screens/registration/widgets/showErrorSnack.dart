@@ -4,7 +4,7 @@ void showErrorSnack(BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: const Text(
-        "다시 시도해주세요!",
+        "사진을 다시 선택해주세요",
         style: TextStyle(
           color: Colors.white,
         ),

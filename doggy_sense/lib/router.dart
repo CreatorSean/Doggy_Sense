@@ -16,7 +16,6 @@ final routerProvider = Provider(
       redirect: (context, state) async {
         List<MyPetModel> petList = [];
         petList = await DatabaseService.getPetListDB();
-        print(petList[0].dogName);
         if (petList.isEmpty) {
           print("empty");
           if (state.matchedLocation == MainScaffold.routeURL) {

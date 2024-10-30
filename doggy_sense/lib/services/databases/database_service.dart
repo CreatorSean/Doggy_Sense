@@ -29,7 +29,7 @@ class DatabaseService {
   }
 
   // ========================= insert DB ==============================
-  static void insertDB(model, String tablename) async {
+  static Future<void> insertDB(model, String tablename) async {
     final db = await database;
     Logger().i('Insert $tablename DB');
 
@@ -98,7 +98,7 @@ class DatabaseService {
 
   static Future<List<DiaryModel>> getDiaryListDB() async {
     final db = await database;
-    Logger().i('Get MyPet DB');
+    Logger().i('Get Diary DB');
 
     final List<Map<String, dynamic>> maps = await db!.query('Diary');
 
