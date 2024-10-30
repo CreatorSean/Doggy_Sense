@@ -1,7 +1,5 @@
 import 'package:doggy_sense/common/constants/sizes.dart';
-import 'package:doggy_sense/screens/diary/view/add_diary_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DairyTextField extends StatelessWidget {
   final double width;

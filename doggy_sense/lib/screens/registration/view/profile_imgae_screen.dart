@@ -37,6 +37,9 @@ class _ProfileImgaeScreenState extends ConsumerState<ProfileImgaeScreen> {
   }
 
   void _onNextTap() {
+    if (imagePath == '') {
+      imagePath = 'assets/images/dogProfile.png';
+    }
     final state = ref.read(registrationForm.notifier).state;
     ref.read(registrationForm.notifier).state = {...state, "img": imagePath};
     ref.read(registrationProvider.notifier).insertMyPet(context);

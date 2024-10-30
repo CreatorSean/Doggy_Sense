@@ -93,13 +93,13 @@ flutter:
 fonts:
     - family: NotoSansKR-Bold
       fonts:
-        - asset: assets\fonts\NotoSansKR-Bold.ttf
+        - asset: assets/fonts/NotoSansKR-Bold.ttf
     - family: NotoSansKR-Medium
       fonts:
-        - asset: assets\fonts\NotoSansKR-Medium.ttf
+        - asset: assets/fonts/NotoSansKR-Medium.ttf
     - family: NotoSansKR-Regular
       fonts:
-        - asset: assets\fonts\NotoSansKR-Regular.ttf
+        - asset: assets/fonts/NotoSansKR-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
