@@ -40,7 +40,6 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                           style: TextStyle(
                             color: const Color(0xff5D4037),
                             fontSize: width * 0.05,
-                            fontFamily: 'NotoSansKR-Medium',
                           ),
                         ),
                       ),
