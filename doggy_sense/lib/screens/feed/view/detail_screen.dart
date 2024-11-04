@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:doggy_sense/common/constants/gaps.dart';
 import 'package:doggy_sense/common/constants/sizes.dart';
 import 'package:doggy_sense/services/databases/models/diary_model.dart';
@@ -29,7 +31,11 @@ class DetailScreen extends StatelessWidget {
                       children: [
                         Stack(
                           children: [
-                            Image.asset(diaryModel.img),
+                            Image.memory(
+                              diaryModel.img, // img가 Uint8List일 때 사용
+                              fit: BoxFit.cover,
+                            ),
+                            // Image.file(diaryModel.img),
                             Positioned(
                               top: 16,
                               right: 16,

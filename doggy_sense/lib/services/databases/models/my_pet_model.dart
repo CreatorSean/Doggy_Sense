@@ -1,9 +1,11 @@
+import 'dart:typed_data';
+
 class MyPetModel {
   final int? id;
   final String dogName;
   final String birth;
   final int gender; // 0: male, 1: female
-  final String img;
+  final Uint8List img;
   final int age;
 
   MyPetModel({

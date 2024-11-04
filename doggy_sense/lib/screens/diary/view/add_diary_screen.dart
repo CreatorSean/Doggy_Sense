@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:doggy_sense/common/constants/gaps.dart';
 import 'package:doggy_sense/screens/registration/widgets/showErrorSnack.dart';
 import 'package:doggy_sense/services/databases/models/diary_model.dart';
@@ -5,10 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../feed/view_model/feed_screen_view_model.dart';
 import '../view_model/diary_view_model.dart';
 
 class AddDiaryScreen extends ConsumerStatefulWidget {
-  const AddDiaryScreen({super.key});
+  XFile? img;
+  AddDiaryScreen({super.key, required this.img});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _AddDiaryScreenState();
@@ -38,26 +43,45 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
     });
   }
 
-  void _onSaveTap() {
+  Future<Uint8List> fileToBytes(String filePath) async {
+    final file = File(filePath);
+    return await file.readAsBytes();
+  }
+
+  void _onSaveTap() async {
+    Uint8List imgBytes;
+
+    imgBytes = await fileToBytes(imagePath);
     if (imagePath.isEmpty) {
-      imagePath = 'assets/images/dog.jpg';
+      imgBytes = await fileToBytes('assets/images/dog.jpg');
     }
     DateTime dateTime = DateTime.now();
     DiaryModel diary = DiaryModel(
       id: null,
       dogId: 1,
       title: _titleController.text,
-      img: imagePath,
+      img: imgBytes,
       sentence: _sentenceController.text,
       date: dateTime.microsecondsSinceEpoch,
     );
     ref.read(diaryProvider.notifier).insertDiary(diary);
     Navigator.pop(context, true);
+    ref.refresh(feedScreenProvider);
+  }
+
+  void initImage() {
+    if (widget.img != null) {
+      _dogImage = widget.img;
+      imagePath = _dogImage!.path;
+    } else {
+      _dogImage = null;
+    }
   }
 
   @override
   void initState() {
     super.initState();
+    initImage();
     _titleController.addListener(
       () {
         setState(() {
@@ -135,11 +159,10 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
                   : Container(
                       width: double.infinity,
                       height: 150,
-                      color: const Color(0xFFF0EDE5),
                       decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(imagePath),
-                        ),
+                        color: const Color(0xFFF0EDE5),
+                        image:
+                            DecorationImage(image: FileImage(File(imagePath))),
                       ),
                     ),
             ),

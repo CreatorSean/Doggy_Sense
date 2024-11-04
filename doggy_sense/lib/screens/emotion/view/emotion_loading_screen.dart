@@ -21,19 +21,6 @@ class _EmotionLoadingScreenState extends ConsumerState<EmotionLoadingScreen>
   String _loadingText = '신이의 마음을 확인하고 있어요';
   int _dotCount = 0;
 
-  void goNext() {
-    Timer(
-      const Duration(seconds: 3),
-      () {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const EmotionResultScreen(),
-            ));
-      },
-    );
-  }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -45,7 +32,6 @@ class _EmotionLoadingScreenState extends ConsumerState<EmotionLoadingScreen>
         _loadingText = '신이의 마음을 확인하고 있어요${'.' * _dotCount}';
       });
     });
-    goNext();
   }
 
   @override

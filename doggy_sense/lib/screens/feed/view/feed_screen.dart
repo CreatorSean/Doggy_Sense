@@ -79,8 +79,9 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
                     final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const AddDiaryScreen(),
+                        builder: (BuildContext context) => AddDiaryScreen(
+                          img: null,
+                        ),
                       ),
                     );
                     if (result == true) {

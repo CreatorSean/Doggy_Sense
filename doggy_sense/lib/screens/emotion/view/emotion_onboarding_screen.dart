@@ -1,4 +1,5 @@
 import 'package:doggy_sense/screens/emotion/view_model/camera_view_model.dart';
+import 'package:doggy_sense/screens/emotion/view_model/emotion_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -33,9 +34,7 @@ class EmotionOnboardingScreen extends ConsumerWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  ref
-                      .watch(cameraProvider.notifier)
-                      .getImage(ImageSource.camera, context);
+                  ref.watch(cameraProvider.notifier).getImage(context);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFD4B499),

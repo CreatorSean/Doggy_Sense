@@ -1,8 +1,10 @@
+import 'dart:typed_data';
+
 class DiaryModel {
   final int? id;
   final int dogId;
   final String title;
-  final String img;
+  final Uint8List img;
   final String sentence;
   int date;
 

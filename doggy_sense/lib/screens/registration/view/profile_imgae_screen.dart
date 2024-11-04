@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:doggy_sense/screens/main/view/main_scaffold.dart';
 import 'package:doggy_sense/screens/registration/view_model/registration_view_model.dart';
@@ -36,18 +37,51 @@ class _ProfileImgaeScreenState extends ConsumerState<ProfileImgaeScreen> {
     }
   }
 
-  void _onNextTap() {
+  int getUserAge(String birth) {
+    int nowYear = DateTime.now().year;
+    int nowMonth = DateTime.now().month;
+    int nowDay = DateTime.now().day;
+
+    int userYear = int.parse(birth.split(".")[0]);
+    int userMonth = int.parse(birth.split(".")[1]);
+    int userDay = int.parse(birth.split(".")[2]);
+
+    int userAge = nowYear - userYear;
+    if (nowMonth < userMonth) {
+      userAge--;
+    }
+
+    if (nowMonth == userMonth) {
+      if (nowDay < userDay) {
+        userAge--;
+      }
+    }
+    return userAge;
+  }
+
+  Future<Uint8List> fileToBytes(String filePath) async {
+    final file = File(filePath);
+    return await file.readAsBytes();
+  }
+
+  void _onNextTap() async {
+    Uint8List imgBytes;
+
+    imgBytes = await fileToBytes(imagePath);
     if (imagePath == '') {
-      imagePath = 'assets/images/dogProfile.png';
+      imgBytes = await fileToBytes('assets/images/dog.jpg');
     }
     final state = ref.read(registrationForm.notifier).state;
-    ref.read(registrationForm.notifier).state = {...state, "img": imagePath};
+    ref.read(registrationForm.notifier).state = {...state, "img": imgBytes};
     ref.read(registrationProvider.notifier).insertMyPet(context);
     context.goNamed(MainScaffold.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
+    final data = ref.read(registrationForm);
+    final age = getUserAge(data['birth']);
+    final gender = data['gender'] == 0 ? '♂' : '♀';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffFAF9F6),
@@ -60,18 +94,18 @@ class _ProfileImgaeScreenState extends ConsumerState<ProfileImgaeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
-              '신이 ♂',
-              style: TextStyle(
+            Text(
+              '${data["dogName"]} $gender',
+              style: const TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
                 color: Color(0xff8B5E3C),
               ),
             ),
             const SizedBox(height: 8.0),
-            const Text(
-              '2024.05.10 1살',
-              style: TextStyle(
+            Text(
+              '${data["birth"]} $age살',
+              style: const TextStyle(
                 fontSize: 16.0,
                 color: Color(0xff8B5E3C),
               ),

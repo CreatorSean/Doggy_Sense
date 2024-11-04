@@ -1,9 +1,12 @@
+import 'package:doggy_sense/screens/diary/view/add_diary_screen.dart';
+import 'package:doggy_sense/screens/emotion/model/emotion_model.dart';
 import 'package:doggy_sense/screens/emotion/widgets/imageBox_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EmotionResultScreen extends ConsumerWidget {
-  const EmotionResultScreen({super.key});
+  EmotionModel? result;
+  EmotionResultScreen({super.key, required this.result});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -14,11 +17,13 @@ class EmotionResultScreen extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const ImageboxWidget(),
+            ImageboxWidget(
+              img: result!.image,
+            ),
             const Spacer(),
-            const Text(
-              '신이는 행복해요! 😊',
-              style: TextStyle(
+            Text(
+              '신이는 ${result!.result}! 😊',
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.brown,
@@ -39,7 +44,14 @@ class EmotionResultScreen extends ConsumerWidget {
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
-                  // 추억 쓰기 버튼 기능 구현 예정
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddDiaryScreen(
+                        img: result!.image,
+                      ),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFD4B499),

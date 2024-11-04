@@ -6,15 +6,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageboxWidget extends ConsumerWidget {
-  const ImageboxWidget({super.key});
+  XFile? img;
+  ImageboxWidget({
+    super.key,
+    required this.img,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    XFile? image = ref.watch(cameraProvider.notifier).image;
-    return image != null
+    return img != null
         ? SizedBox(
             child: Image.file(
-              File(image.path),
+              File(img!.path),
+              fit: BoxFit.fitWidth,
               errorBuilder: (context, error, stackTrace) {
                 return const Center(
                   child: Text('이미지 로드 실패'),

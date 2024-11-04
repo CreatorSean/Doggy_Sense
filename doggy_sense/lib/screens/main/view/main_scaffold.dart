@@ -42,7 +42,7 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? savedPatientId = prefs.getInt('selectedPatientId') ?? 1;
     Logger().i("initPatient");
-    MyPetModel pet = await ref
+    MyPetModel? pet = await ref
         .read(selectedPetViewModelProvider.notifier)
         .getSavedmyPetDB(savedPatientId);
     ref.read(selectedPetViewModelProvider.notifier).setselectedPet(pet);

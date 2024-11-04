@@ -10,7 +10,7 @@ class ProfileWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    MyPetModel selectedPet =
+    MyPetModel? selectedPet =
         ref.read(selectedPetViewModelProvider.notifier).getselectedPet();
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -18,8 +18,8 @@ class ProfileWidget extends ConsumerWidget {
       children: [
         CircleAvatar(
           radius: width * 0.14,
-          child: Image.asset(
-            selectedPet.img,
+          backgroundImage: MemoryImage(
+            selectedPet!.img, // img가 Uint8List일 때 사용
           ),
         ),
         Gaps.v24,

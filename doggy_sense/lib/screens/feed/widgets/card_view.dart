@@ -17,12 +17,17 @@ class CardView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text('${diaryModel.date}'),
+          Gaps.v8,
           ClipRRect(
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),
             ),
-            child: Image.asset(diaryModel.img),
+            child: Image.memory(
+              diaryModel.img, // img가 Uint8List일 때 사용
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
