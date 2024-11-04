@@ -14,13 +14,14 @@ class CameraViewModel extends AsyncNotifier<EmotionModel?> {
   EmotionModel? result;
   final ImagePicker picker = ImagePicker();
 
-  Future<void> getImage(BuildContext context) async {
+  Future<void> getImage(BuildContext context, bool isCamera) async {
     state = const AsyncValue.loading();
 
     final url = Uri.parse('http://192.168.1.46:8800/api/emotion');
     final picker = ImagePicker();
-    final pickedFile =
-        await picker.pickImage(source: ImageSource.gallery); // 갤러리에서 이미지 선택
+    final pickedFile = isCamera
+        ? await picker.pickImage(source: ImageSource.camera)
+        : await picker.pickImage(source: ImageSource.gallery); // 갤러리에서 이미지 선택
     if (pickedFile == null) return;
     Navigator.push(
       context,

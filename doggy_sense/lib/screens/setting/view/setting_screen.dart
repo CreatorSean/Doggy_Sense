@@ -19,46 +19,54 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xffEDEAE3),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const ProfileWidget(),
-          Gaps.v16,
-          Expanded(
-            child: ListView.builder(
-              itemCount: menus.length + 1,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return const Divider(
-                    thickness: 1,
-                    color: Color(0XFFA2A2A2),
-                  );
-                } else if (index <= menus.length) {
-                  return Column(
-                    children: [
-                      ListTile(
-                        title: Text(
-                          menus[index - 1],
-                          style: TextStyle(
-                            color: const Color(0xff5D4037),
-                            fontSize: width * 0.03,
-                          ),
-                        ),
-                      ),
-                      const Divider(
-                        thickness: 1,
-                        color: Color(0XFFA2A2A2),
-                      ),
-                    ],
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              },
-            ),
-          ),
-        ],
+      body: Padding(
+        padding: EdgeInsets.only(
+          left: width * 0.1,
+          right: width * 0.1,
+          top: width * 0.05,
+        ),
+        child: const Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ProfileWidget(),
+            Gaps.v16,
+          ],
+        ),
       ),
     );
   }
 }
+
+//  Expanded(
+//   child: ListView.builder(
+//     itemCount: menus.length + 1,
+//     itemBuilder: (context, index) {
+//       if (index == 0) {
+//         return const Divider(
+//           thickness: 1,
+//           color: Color(0XFFA2A2A2),
+//         );
+//       } else if (index <= menus.length) {
+//         return Column(
+//           children: [
+//             ListTile(
+//               title: Text(
+//                 menus[index - 1],
+//                 style: TextStyle(
+//                   color: const Color(0xff5D4037),
+//                   fontSize: width * 0.03,
+//                 ),
+//               ),
+//             ),
+//             const Divider(
+//               thickness: 1,
+//               color: Color(0XFFA2A2A2),
+//             ),
+//           ],
+//         );
+//       } else {
+//         return const SizedBox();
+//       }
+//     },
+//   ),
+// ),

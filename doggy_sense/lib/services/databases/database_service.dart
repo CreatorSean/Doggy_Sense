@@ -131,7 +131,7 @@ class DatabaseService {
   }
 
   // ========================= update DB ==============================
-  static Future<void> updateUserDB(MyPetModel pet) async {
+  static Future<void> updatePetDB(MyPetModel pet) async {
     final db = await database;
     Logger().i('Update DB: ${pet.dogName}');
     await db!.update(

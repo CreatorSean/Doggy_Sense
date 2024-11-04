@@ -52,7 +52,10 @@ dependencies:
   http_parser: ^4.0.0
   photo_manager: ^3.6.1
   get: ^4.6.5
+  uuid: ^3.0.0
   photo_manager_image_provider: ^2.2.0
+  flutter_native_splash: ^2.4.2
+  flutter_launcher_icons: ^0.14.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
 
@@ -83,7 +86,10 @@ flutter:
     - assets/images/
     - assets/lotties/
     - assets/fonts/
-
+    - assets/icons/
+    - assets/fonts/NotoSansKR-Bold.ttf
+    - assets/fonts/NotoSansKR-Medium.ttf
+    - assets/fonts/NotoSansKR-Regular.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -95,16 +101,16 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-fonts:
-    - family: NotoSansKR-Bold
-      fonts:
-        - asset: assets/fonts/NotoSansKR-Bold.ttf
-    - family: NotoSansKR-Medium
-      fonts:
-        - asset: assets/fonts/NotoSansKR-Medium.ttf
-    - family: NotoSansKR-Regular
-      fonts:
-        - asset: assets/fonts/NotoSansKR-Regular.ttf
+  fonts:
+      - family: NotoSansKR-Bold
+        fonts:
+          - asset: assets/fonts/NotoSansKR-Bold.ttf
+      - family: NotoSansKR-Medium
+        fonts:
+          - asset: assets/fonts/NotoSansKR-Medium.ttf
+      - family: NotoSansKR-Regular
+        fonts:
+          - asset: assets/fonts/NotoSansKR-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

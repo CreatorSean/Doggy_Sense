@@ -56,6 +56,13 @@ class RegistrationViewModel extends AsyncNotifier<MyPetModel> {
     context.goNamed(MainScaffold.routeName);
   }
 
+  Future<void> updatePet(MyPetModel pet) async {
+    await AsyncValue.guard(() async {
+      // Logger().d("Setting View Model : User delete ${user.userName}");
+      DatabaseService.updatePetDB(pet);
+    });
+  }
+
   @override
   FutureOr<MyPetModel> build() {
     return myPet;
