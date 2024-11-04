@@ -5,6 +5,7 @@ import 'package:doggy_sense/common/constants/gaps.dart';
 import 'package:doggy_sense/screens/registration/widgets/showErrorSnack.dart';
 import 'package:doggy_sense/services/databases/models/diary_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -44,26 +45,38 @@ class _AddDiaryScreenState extends ConsumerState<AddDiaryScreen> {
   }
 
   Future<Uint8List> fileToBytes(String filePath) async {
-    final file = File(filePath);
-    return await file.readAsBytes();
+    if (filePath.startsWith('assets/')) {
+      // assets 폴더의 파일은 rootBundle로 읽어야 함
+      return await rootBundle
+          .load(filePath)
+          .then((data) => data.buffer.asUint8List());
+    } else {
+      // 파일 시스템에서 읽는 경우
+      final file = File(filePath);
+      return await file.readAsBytes();
+    }
   }
 
   void _onSaveTap() async {
     Uint8List imgBytes;
 
-    imgBytes = await fileToBytes(imagePath);
     if (imagePath.isEmpty) {
       imgBytes = await fileToBytes('assets/images/dog.jpg');
+    } else {
+      imgBytes = await fileToBytes(imagePath);
     }
-    DateTime dateTime = DateTime.now();
+    //DateTime dateTime = DateTime.now();
+
+    int currentTime = DateTime.now().millisecondsSinceEpoch;
     DiaryModel diary = DiaryModel(
       id: null,
       dogId: 1,
       title: _titleController.text,
       img: imgBytes,
       sentence: _sentenceController.text,
-      date: dateTime.microsecondsSinceEpoch,
+      date: currentTime,
     );
+
     ref.read(diaryProvider.notifier).insertDiary(diary);
     Navigator.pop(context, true);
     ref.refresh(feedScreenProvider);

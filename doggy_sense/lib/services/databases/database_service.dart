@@ -33,10 +33,6 @@ class DatabaseService {
     final db = await database;
     Logger().i('Insert $tablename DB');
 
-    if (model is DiaryModel) {
-      model.date = DateTime.now().millisecondsSinceEpoch;
-    }
-
     await db!.insert(
       tablename,
       model.toMap(),
@@ -132,5 +128,17 @@ class DatabaseService {
         age: maps[index]["age"],
       );
     });
+  }
+
+  // ========================= update DB ==============================
+  static Future<void> updateUserDB(MyPetModel pet) async {
+    final db = await database;
+    Logger().i('Update DB: ${pet.dogName}');
+    await db!.update(
+      "MyPet",
+      pet.toMap(),
+      where: "id = ?",
+      whereArgs: [pet.id],
+    );
   }
 }

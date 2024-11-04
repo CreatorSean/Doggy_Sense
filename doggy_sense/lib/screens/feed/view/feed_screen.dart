@@ -7,6 +7,7 @@ import 'package:doggy_sense/screens/feed/view/detail_screen.dart';
 import 'package:doggy_sense/screens/feed/view_model/feed_screen_view_model.dart';
 import 'package:doggy_sense/screens/feed/widgets/card_view.dart';
 import 'package:doggy_sense/screens/feed/widgets/dairyTextField.dart';
+import 'package:doggy_sense/services/databases/models/diary_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +24,8 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
   final List<CardModel> cards = CardsData.cards;
   List<Widget> diaryEntries = [];
   DateTime selectedDate = DateTime.now();
-  String title = "10월의 기록";
+  late String nowMonth;
+  late String title;
 
   // 날짜 선택 기능
   Future<void> _selectDate(BuildContext context) async {
@@ -43,11 +45,25 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    nowMonth = DateFormat('MM월').format(selectedDate);
+    title = '$nowMonth의 기록';
+  }
+
+  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return ref.watch(feedScreenProvider).when(
       data: (diaryList) {
+        // 선택된 달에 해당하는 일기만 필터링
+        List<DiaryModel> filteredDiaryList = diaryList.where((diary) {
+          DateTime diaryDate = DateTime.fromMillisecondsSinceEpoch(diary.date);
+          return diaryDate.year == selectedDate.year &&
+              diaryDate.month == selectedDate.month;
+        }).toList();
         return Scaffold(
           backgroundColor: const Color(0xffFAF9F6),
           body: Padding(
@@ -97,19 +113,19 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
                 Gaps.v16,
                 Expanded(
                   child: ListView.separated(
-                    itemCount: diaryList.length,
+                    itemCount: filteredDiaryList.length,
                     itemBuilder: (context, index) {
                       return InkWell(
                         child: Hero(
-                          tag: diaryList[index].id!, // Hero 태그 설정
-                          child: CardView(diaryModel: diaryList[index]),
+                          tag: filteredDiaryList[index].id!, // Hero 태그 설정
+                          child: CardView(diaryModel: filteredDiaryList[index]),
                         ),
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  DetailScreen(diaryModel: diaryList[index]),
+                              builder: (BuildContext context) => DetailScreen(
+                                  diaryModel: filteredDiaryList[index]),
                             ),
                           );
                         },
