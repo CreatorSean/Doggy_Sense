@@ -5,7 +5,6 @@ import 'package:doggy_sense/common/constants/sizes.dart';
 import 'package:doggy_sense/services/databases/models/diary_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../model/card_model.dart';
 
 class DetailScreen extends StatelessWidget {
   final DiaryModel diaryModel;

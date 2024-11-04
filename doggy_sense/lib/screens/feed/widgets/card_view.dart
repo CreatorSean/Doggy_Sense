@@ -3,7 +3,6 @@ import 'package:doggy_sense/common/constants/sizes.dart';
 import 'package:doggy_sense/services/databases/models/diary_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../model/card_model.dart';
 
 class CardView extends StatelessWidget {
   final DiaryModel diaryModel;

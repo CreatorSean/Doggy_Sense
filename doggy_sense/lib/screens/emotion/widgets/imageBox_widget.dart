@@ -14,11 +14,15 @@ class ImageboxWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return img != null
         ? SizedBox(
+            width: width,
+            height: height * 0.4,
             child: Image.file(
               File(img!.path),
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.contain,
               errorBuilder: (context, error, stackTrace) {
                 return const Center(
                   child: Text('이미지 로드 실패'),

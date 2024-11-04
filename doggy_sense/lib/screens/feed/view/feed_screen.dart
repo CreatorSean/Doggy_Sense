@@ -2,7 +2,6 @@ import 'package:doggy_sense/common/constants/gaps.dart';
 import 'package:doggy_sense/common/constants/sizes.dart';
 import 'package:doggy_sense/screens/diary/view/add_diary_screen.dart';
 import 'package:doggy_sense/screens/diary/view_model/diary_view_model.dart';
-import 'package:doggy_sense/screens/feed/model/card_model.dart';
 import 'package:doggy_sense/screens/feed/view/detail_screen.dart';
 import 'package:doggy_sense/screens/feed/view_model/feed_screen_view_model.dart';
 import 'package:doggy_sense/screens/feed/widgets/card_view.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:photo_manager/photo_manager.dart';
 
 class FeedScreen extends ConsumerStatefulWidget {
   const FeedScreen({super.key});
@@ -21,7 +21,6 @@ class FeedScreen extends ConsumerStatefulWidget {
 }
 
 class _FeedScreenState extends ConsumerState<FeedScreen> {
-  final List<CardModel> cards = CardsData.cards;
   List<Widget> diaryEntries = [];
   DateTime selectedDate = DateTime.now();
   late String nowMonth;
