@@ -30,10 +30,10 @@ class _GenderScreenState extends ConsumerState<GenderScreen> {
     // final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffFAF9F6),
+        backgroundColor: const Color(0xffEDEAE3),
         elevation: 0.0,
       ),
-      backgroundColor: const Color(0xffFAF9F6),
+      backgroundColor: const Color(0xffEDEAE3),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -77,7 +77,7 @@ class _GenderScreenState extends ConsumerState<GenderScreen> {
                           style: TextStyle(
                             fontSize: 16.0,
                             color: selectedGender == 0
-                                ? const Color(0xffFAF9F6)
+                                ? const Color(0xffEDEAE3)
                                 : const Color(0xff5D4037),
                           ),
                         ),
@@ -110,7 +110,7 @@ class _GenderScreenState extends ConsumerState<GenderScreen> {
                           style: TextStyle(
                             fontSize: 16.0,
                             color: selectedGender == 1
-                                ? const Color(0xffFAF9F6)
+                                ? const Color(0xffEDEAE3)
                                 : const Color(0xff5D4037),
                           ),
                         ),
@@ -130,7 +130,7 @@ class _GenderScreenState extends ConsumerState<GenderScreen> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffD4B499),
+                  backgroundColor: const Color(0xFF2AA971),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),

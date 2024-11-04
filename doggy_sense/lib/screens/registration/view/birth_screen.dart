@@ -46,10 +46,10 @@ class _BirthScreenState extends ConsumerState<BirthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffFAF9F6),
+        backgroundColor: const Color(0xffEDEAE3),
         elevation: 0.0,
       ),
-      backgroundColor: const Color(0xffFAF9F6),
+      backgroundColor: const Color(0xffEDEAE3),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(

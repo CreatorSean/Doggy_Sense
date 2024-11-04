@@ -13,11 +13,14 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: const Color(0xffFAF9F6),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+      backgroundColor: const Color(0xffEDEAE3),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+        width: width,
+        height: height,
         child: Column(
           children: [
             Hero(
@@ -31,6 +34,8 @@ class DetailScreen extends StatelessWidget {
                         Stack(
                           children: [
                             Image.memory(
+                              width: width,
+                              height: width * 0.7,
                               diaryModel.img, // img가 Uint8List일 때 사용
                               fit: BoxFit.cover,
                             ),

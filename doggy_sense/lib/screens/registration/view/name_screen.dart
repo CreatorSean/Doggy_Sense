@@ -48,10 +48,10 @@ class _NameScreenState extends ConsumerState<NameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffFAF9F6),
+        backgroundColor: const Color(0xffEDEAE3),
         elevation: 0.0,
       ),
-      backgroundColor: const Color(0xffFAF9F6),
+      backgroundColor: const Color(0xffEDEAE3),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -89,7 +89,7 @@ class _NameScreenState extends ConsumerState<NameScreen> {
               child: ElevatedButton(
                 onPressed: _onNextTap,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffD4B499),
+                  backgroundColor: const Color(0xFF2AA971),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),

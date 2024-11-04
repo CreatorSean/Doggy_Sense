@@ -56,6 +56,7 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     final List<String> titleList = <String>[
       "Feed",
       "Emo",
@@ -64,8 +65,9 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 12.0),
+        child: Container(
+          color: const Color(0xffEDEAE3),
+          padding: EdgeInsets.only(left: width * 0.08),
           child: MainAppbar(
             title: titleList[_selectedPageIndex],
           ),
@@ -73,7 +75,7 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
       ),
       body: _pageScreen[_selectedPageIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xffFAF9F6),
+        backgroundColor: const Color(0xffEDEAE3),
         selectedItemColor: const Color(0xff5D4037),
         unselectedItemColor: Colors.grey,
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),

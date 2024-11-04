@@ -84,10 +84,10 @@ class _ProfileImgaeScreenState extends ConsumerState<ProfileImgaeScreen> {
     final gender = data['gender'] == 0 ? '♂' : '♀';
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffFAF9F6),
+        backgroundColor: const Color(0xffEDEAE3),
         elevation: 0.0,
       ),
-      backgroundColor: const Color(0xffFAF9F6),
+      backgroundColor: const Color(0xffEDEAE3),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(

@@ -16,7 +16,7 @@ class _MainAppbarState extends ConsumerState<MainAppbar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: const Color(0xffFAF9F6),
+      backgroundColor: const Color(0xffEDEAE3),
       title: Text(
         widget.title,
         style: const TextStyle(color: Colors.black),

@@ -19,7 +19,7 @@ class ImageboxWidget extends ConsumerWidget {
     return img != null
         ? SizedBox(
             width: width,
-            height: height * 0.4,
+            height: width * 0.9,
             child: Image.file(
               File(img!.path),
               fit: BoxFit.contain,

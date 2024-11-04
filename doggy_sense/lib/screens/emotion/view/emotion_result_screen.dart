@@ -1,4 +1,5 @@
 import 'package:doggy_sense/screens/diary/view/add_diary_screen.dart';
+import 'package:doggy_sense/screens/diary/view/select_image_screen.dart';
 import 'package:doggy_sense/screens/emotion/model/emotion_model.dart';
 import 'package:doggy_sense/screens/emotion/widgets/imageBox_widget.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class EmotionResultScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: const Color(0xffFAF9F6),
+      backgroundColor: const Color(0xffEDEAE3),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -54,7 +55,7 @@ class EmotionResultScreen extends ConsumerWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFD4B499),
+                  backgroundColor: const Color(0xFF2AA971),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),

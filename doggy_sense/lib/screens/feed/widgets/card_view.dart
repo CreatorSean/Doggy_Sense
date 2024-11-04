@@ -11,6 +11,9 @@ class CardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
     // microsecondsSinceEpoch 값을 DateTime으로 변환
     DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(diaryModel.date);
     print("Raw date value: $dateTime");
@@ -27,40 +30,46 @@ class CardView extends StatelessWidget {
           ),
         ),
         Gaps.v8,
-        Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          elevation: 20,
-          shadowColor: Colors.grey.withOpacity(0.5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
+        SizedBox(
+          width: width,
+          height: width * 0.8,
+          child: Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            elevation: 20,
+            shadowColor: Colors.grey.withOpacity(0.5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                  child: Image.memory(
+                    width: width,
+                    height: width * 0.7,
+                    diaryModel.img, // img가 Uint8List일 때 사용
+                    fit: BoxFit.contain,
+                  ),
                 ),
-                child: Image.memory(
-                  diaryModel.img, // img가 Uint8List일 때 사용
-                  fit: BoxFit.cover,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(diaryModel.title,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      Gaps.v8,
+                      Text(diaryModel.sentence,
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.grey)),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(diaryModel.title,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                    Gaps.v8,
-                    Text(diaryModel.sentence,
-                        style:
-                            const TextStyle(fontSize: 16, color: Colors.grey)),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],

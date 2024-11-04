@@ -12,7 +12,7 @@ class EmotionOnboardingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFAF9F6),
+      backgroundColor: const Color(0xffEDEAE3),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -37,7 +37,7 @@ class EmotionOnboardingScreen extends ConsumerWidget {
                   ref.watch(cameraProvider.notifier).getImage(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFD4B499),
+                  backgroundColor: const Color(0xFF2AA971),
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),

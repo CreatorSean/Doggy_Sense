@@ -1,6 +1,6 @@
 import 'package:doggy_sense/common/constants/gaps.dart';
 import 'package:doggy_sense/common/constants/sizes.dart';
-import 'package:doggy_sense/screens/diary/view/add_diary_screen.dart';
+import 'package:doggy_sense/screens/diary/view/select_image_screen.dart';
 import 'package:doggy_sense/screens/diary/view_model/diary_view_model.dart';
 import 'package:doggy_sense/screens/feed/view/detail_screen.dart';
 import 'package:doggy_sense/screens/feed/view_model/feed_screen_view_model.dart';
@@ -64,9 +64,9 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
               diaryDate.month == selectedDate.month;
         }).toList();
         return Scaffold(
-          backgroundColor: const Color(0xffFAF9F6),
+          backgroundColor: const Color(0xffEDEAE3),
           body: Padding(
-            padding: const EdgeInsets.only(left: 28.0, right: 28.0),
+            padding: EdgeInsets.only(left: width * 0.1, right: width * 0.1),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -94,7 +94,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
                     final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => AddDiaryScreen(
+                        builder: (BuildContext context) => SelectImageScreen(
                           img: null,
                         ),
                       ),

@@ -47,7 +47,7 @@ class _EmotionLoadingScreenState extends ConsumerState<EmotionLoadingScreen>
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: const Color(0xFFFAF9F6),
+      backgroundColor: const Color(0xffEDEAE3),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,3 +1,4 @@
+import 'package:doggy_sense/common/constants/gaps.dart';
 import 'package:doggy_sense/screens/setting/widgets/profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,11 +18,12 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: const Color(0xffFAF9F6),
+      backgroundColor: const Color(0xffEDEAE3),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const ProfileWidget(),
+          Gaps.v16,
           Expanded(
             child: ListView.builder(
               itemCount: menus.length + 1,
@@ -29,7 +31,7 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                 if (index == 0) {
                   return const Divider(
                     thickness: 1,
-                    color: Color(0xffD4B499),
+                    color: Color(0XFFA2A2A2),
                   );
                 } else if (index <= menus.length) {
                   return Column(
@@ -39,13 +41,13 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                           menus[index - 1],
                           style: TextStyle(
                             color: const Color(0xff5D4037),
-                            fontSize: width * 0.05,
+                            fontSize: width * 0.03,
                           ),
                         ),
                       ),
                       const Divider(
                         thickness: 1,
-                        color: Color(0xffD4B499),
+                        color: Color(0XFFA2A2A2),
                       ),
                     ],
                   );

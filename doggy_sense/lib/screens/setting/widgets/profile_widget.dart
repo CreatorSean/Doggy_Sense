@@ -17,7 +17,7 @@ class ProfileWidget extends ConsumerWidget {
     return Column(
       children: [
         CircleAvatar(
-          radius: width * 0.14,
+          radius: width * 0.12,
           backgroundImage: MemoryImage(
             selectedPet!.img, // img가 Uint8List일 때 사용
           ),
@@ -25,7 +25,7 @@ class ProfileWidget extends ConsumerWidget {
         Gaps.v24,
         Text(
           selectedPet.dogName,
-          style: TextStyle(fontSize: width * 0.08),
+          style: TextStyle(fontSize: width * 0.05),
         ),
       ],
     );
