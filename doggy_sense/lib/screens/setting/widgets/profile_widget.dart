@@ -13,7 +13,7 @@ class ProfileWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     MyPetModel? selectedPet =
-        ref.read(selectedPetViewModelProvider.notifier).getselectedPet();
+        ref.watch(selectedPetViewModelProvider.notifier).getselectedPet();
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Row(
@@ -31,14 +31,18 @@ class ProfileWidget extends ConsumerWidget {
         ),
         const Spacer(),
         ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProfileUpdateScreen(
-                    myPet: selectedPet,
-                  ),
-                ));
+          onPressed: () async {
+            final result = Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProfileUpdateScreen(
+                  myPet: selectedPet,
+                ),
+              ),
+            );
+            if (result == true) {
+              ref.refresh(selectedPetViewModelProvider);
+            }
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF2AA971),

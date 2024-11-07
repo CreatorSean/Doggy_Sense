@@ -1,7 +1,8 @@
 import 'package:doggy_sense/screens/diary/view/add_diary_screen.dart';
-import 'package:doggy_sense/screens/diary/view/select_image_screen.dart';
 import 'package:doggy_sense/screens/emotion/model/emotion_model.dart';
 import 'package:doggy_sense/screens/emotion/widgets/imageBox_widget.dart';
+import 'package:doggy_sense/services/databases/models/my_pet_model.dart';
+import 'package:doggy_sense/services/selected_pet_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,6 +12,8 @@ class EmotionResultScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    MyPetModel? selectedPet =
+        ref.read(selectedPetViewModelProvider.notifier).getselectedPet();
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: const Color(0xffEDEAE3),
@@ -23,7 +26,7 @@ class EmotionResultScreen extends ConsumerWidget {
             ),
             const Spacer(),
             Text(
-              '신이는 ${result!.result}! 😊',
+              '${selectedPet!.dogName} ${result!.result}! 😊',
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -31,10 +34,10 @@ class EmotionResultScreen extends ConsumerWidget {
               ),
             ),
             const Spacer(),
-            const Text(
-              '신이와 함께 한 추억을 기록으로 한 번 남겨볼까요?',
+            Text(
+              '${selectedPet.dogName}와 함께 한 추억을 기록으로 한 번 남겨볼까요?',
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 color: Colors.brown,
               ),

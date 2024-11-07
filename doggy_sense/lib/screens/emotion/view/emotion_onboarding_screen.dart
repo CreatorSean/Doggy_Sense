@@ -1,16 +1,18 @@
 import 'package:doggy_sense/screens/emotion/view_model/camera_view_model.dart';
 import 'package:doggy_sense/screens/emotion/view_model/emotion_view_model.dart';
+import 'package:doggy_sense/services/databases/models/my_pet_model.dart';
+import 'package:doggy_sense/services/selected_pet_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EmotionOnboardingScreen extends ConsumerWidget {
-  final String name = '신이';
-
   const EmotionOnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    MyPetModel? selectedPet =
+        ref.read(selectedPetViewModelProvider.notifier).getselectedPet();
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: const Color(0xffEDEAE3),
@@ -22,7 +24,7 @@ class EmotionOnboardingScreen extends ConsumerWidget {
           children: [
             const Spacer(),
             Text(
-              '$name의 속마음을 들어다 볼까요?',
+              '${selectedPet!.dogName}의 속마음을 들어다 볼까요?',
               style: const TextStyle(
                 fontSize: 20,
                 color: Color(0xff5D4037),

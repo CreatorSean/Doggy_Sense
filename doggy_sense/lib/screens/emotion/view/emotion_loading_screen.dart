@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:doggy_sense/common/constants/sizes.dart';
+import 'package:doggy_sense/services/databases/models/my_pet_model.dart';
+import 'package:doggy_sense/services/selected_pet_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
@@ -18,18 +20,22 @@ class _EmotionLoadingScreenState extends ConsumerState<EmotionLoadingScreen>
     with TickerProviderStateMixin {
   late final AnimationController _lottieContorller;
   late Timer _textTimer;
-  String _loadingText = '신이의 마음을 확인하고 있어요';
+  String _loadingText = '';
+
   int _dotCount = 0;
 
   @override
   void initState() {
+    MyPetModel? selectedPet =
+        ref.read(selectedPetViewModelProvider.notifier).getselectedPet();
+    _loadingText = '${selectedPet!.dogName}의 마음을 확인하고 있어요';
     // TODO: implement initState
     super.initState();
     _lottieContorller = AnimationController(vsync: this);
     _textTimer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
       setState(() {
         _dotCount = (_dotCount + 1) % 4;
-        _loadingText = '신이의 마음을 확인하고 있어요${'.' * _dotCount}';
+        _loadingText = '${selectedPet.dogName}의 마음을 확인하고 있어요${'.' * _dotCount}';
       });
     });
   }

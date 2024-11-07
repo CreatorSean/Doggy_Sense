@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:doggy_sense/screens/main/view/main_scaffold.dart';
-import 'package:doggy_sense/screens/registration/widgets/showErrorSnack.dart';
 import 'package:doggy_sense/services/databases/database_service.dart';
 import 'package:doggy_sense/services/databases/models/my_pet_model.dart';
 import 'package:flutter/widgets.dart';

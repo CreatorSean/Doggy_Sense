@@ -1,14 +1,13 @@
 import 'dart:io';
 import 'dart:typed_data';
-
-import 'package:doggy_sense/screens/main/view/main_scaffold.dart';
+import 'package:doggy_sense/common/constants/gaps.dart';
 import 'package:doggy_sense/screens/registration/view_model/registration_view_model.dart';
 import 'package:doggy_sense/services/databases/models/my_pet_model.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:doggy_sense/services/selected_pet_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -30,10 +29,10 @@ class ProfileUpdateScreen extends ConsumerStatefulWidget {
 class _ProfileUpdateScreenState extends ConsumerState<ProfileUpdateScreen> {
   XFile? _dogImage;
   String imagePath = '';
-  String _username = "";
+  String _dogName = "";
 
   final ImagePicker _picker = ImagePicker();
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _dogNameController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
 
   Future<void> _pickImage() async {
@@ -62,7 +61,6 @@ class _ProfileUpdateScreenState extends ConsumerState<ProfileUpdateScreen> {
     if (nowMonth < userMonth) {
       userAge--;
     }
-
     if (nowMonth == userMonth) {
       if (nowDay < userDay) {
         userAge--;
@@ -78,53 +76,81 @@ class _ProfileUpdateScreenState extends ConsumerState<ProfileUpdateScreen> {
 
   void _onNextTap() async {
     Uint8List imgBytes;
-
+    int age = getUserAge(_dateController.text);
+    if (imagePath == '') {
+      imagePath = _dogImage!.path;
+    }
     imgBytes = await fileToBytes(imagePath);
     if (imagePath == '') {
       imgBytes = await fileToBytes('assets/images/dog.jpg');
     }
-    final state = ref.read(registrationForm.notifier).state;
-    ref.read(registrationForm.notifier).state = {...state, "img": imgBytes};
-    ref.read(registrationProvider.notifier).insertMyPet(context);
-    Navigator.pop(context);
+    MyPetModel pet = MyPetModel(
+      id: widget.myPet.id,
+      dogName: _dogName,
+      birth: _dateController.text,
+      gender: widget.myPet.gender,
+      img: imgBytes,
+      age: age,
+    );
+    ref.watch(registrationProvider.notifier).updatePet(pet);
+    ref.refresh(selectedPetViewModelProvider);
+    Navigator.pop(context, true);
   }
 
   void convertUint8ListToXFile(Uint8List data) async {
     final tempDir = await getTemporaryDirectory();
-
     final filePath = '${tempDir.path}/${const Uuid().v4()}.jpg';
-
     final file = await File(filePath).writeAsBytes(data);
     setState(() {
       _dogImage = XFile(file.path);
     });
   }
 
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime parsedDate =
+        DateTime.parse(widget.myPet.birth.replaceAll('.', '-'));
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: parsedDate,
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        _dateController.text = DateFormat('yyyy.MM.dd').format(picked);
+      });
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _usernameController.addListener(
+    _dogNameController.addListener(
       () {
         setState(() {
-          _username = _usernameController.text;
+          _dogName = _dogNameController.text;
         });
       },
     );
-    _username = widget.myPet.dogName;
+    setState(() {
+      _dateController.text = widget.myPet.birth;
+    });
     convertUint8ListToXFile(widget.myPet.img);
   }
 
   @override
   Widget build(BuildContext context) {
-    final data = ref.read(registrationForm);
-    final age = getUserAge(widget.myPet.birth);
-    final gender = widget.myPet.gender == 0 ? '♂' : '♀';
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           '프로필 수정',
-          style: TextStyle(fontFamily: 'NotoSansKR-Bold'),
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'NotoSansKR-Medium',
+          ),
         ),
         backgroundColor: const Color(0xffEDEAE3),
         elevation: 0,
@@ -138,46 +164,65 @@ class _ProfileUpdateScreenState extends ConsumerState<ProfileUpdateScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              widget.myPet.dogName,
-              style: const TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff8B5E3C),
-              ),
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              widget.myPet.birth,
-              style: const TextStyle(
-                fontSize: 16.0,
-                color: Color(0xff8B5E3C),
-              ),
-            ),
             const SizedBox(height: 20.0),
             GestureDetector(
               onTap: _pickImage,
-              child: CircleAvatar(
-                radius: 60,
-                backgroundColor: const Color(0xffD3D3D3),
-                backgroundImage:
-                    _dogImage != null ? FileImage(File(_dogImage!.path)) : null,
-                child: _dogImage == null
-                    ? const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.add, color: Color(0xff8B5E3C), size: 30),
-                          Text(
-                            '강아지 사진',
-                            style: TextStyle(
-                                fontSize: 16.0, color: Color(0xff8B5E3C)),
-                          ),
-                        ],
-                      )
-                    : null,
+              child: Stack(
+                children: [
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundColor: const Color(0xffD3D3D3),
+                    backgroundImage: _dogImage != null
+                        ? FileImage(File(_dogImage!.path))
+                        : null,
+                    child: _dogImage == null
+                        ? const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.add,
+                                  color: Color(0xff8B5E3C), size: 30),
+                              Text(
+                                '강아지 사진',
+                                style: TextStyle(
+                                    fontSize: 16.0, color: Color(0xff8B5E3C)),
+                              ),
+                            ],
+                          )
+                        : null,
+                  ),
+                  const Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: CircleAvatar(
+                      radius: 15,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.camera_alt,
+                        size: 18,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 40.0),
+            Gaps.v40,
+            Center(
+              child: TextField(
+                controller: _dogNameController,
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                  hintText: widget.myPet.dogName,
+                  border: InputBorder.none,
+                ),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Gaps.v40,
+            _buildInfoRow('생년월일', widget.myPet.birth,
+                func: () async => await _selectDate(context), isLink: true),
+            Gaps.v40,
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -202,6 +247,40 @@ class _ProfileUpdateScreenState extends ConsumerState<ProfileUpdateScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(String title, String value,
+      {bool editable = true,
+      bool isLink = false,
+      required Future<void> Function() func}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          isLink
+              ? GestureDetector(
+                  onTap: () async {
+                    await func();
+                  },
+                  child: Text(
+                    _dateController.text,
+                    style: const TextStyle(fontSize: 16, color: Colors.grey),
+                  ),
+                )
+              : Text(
+                  value,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: editable ? Colors.black : Colors.grey),
+                ),
+        ],
       ),
     );
   }

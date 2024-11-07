@@ -66,11 +66,12 @@ class _ProfileImgaeScreenState extends ConsumerState<ProfileImgaeScreen> {
 
   void _onNextTap() async {
     Uint8List imgBytes;
-
+    print(imagePath);
     imgBytes = await fileToBytes(imagePath);
     if (imagePath == '') {
       imgBytes = await fileToBytes('assets/images/dog.jpg');
     }
+
     final state = ref.read(registrationForm.notifier).state;
     ref.read(registrationForm.notifier).state = {...state, "img": imgBytes};
     ref.read(registrationProvider.notifier).insertMyPet(context);
